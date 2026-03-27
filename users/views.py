@@ -51,7 +51,7 @@ class RegisterView(FormView):
         derived_key, _ = derive_key_from_password(password.encode('utf-8'))
         private_key_pem, public_key_pem = generate_key_pair(password=derived_key)
 
-        user = User.objects.create_user(username=username, password=password)
+        user = User.objects.create_user(username=username, email=form.cleaned_data.get('email', ''), password=password)
         user.public_key = public_key_pem
         user.save()
 
