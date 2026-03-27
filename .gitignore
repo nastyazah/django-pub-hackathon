@@ -1,6 +1,11 @@
-environment/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+*.sqlite3
+.venv/
 venv/
-
-.vscode/
-
-*/.pyc
+dist/
+*.egg-info/
+.DS_Store
