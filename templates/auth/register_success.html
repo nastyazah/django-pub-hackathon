@@ -10,59 +10,29 @@
     <section class="w-full max-w-lg rounded-2xl bg-white p-8 shadow-xl">
       <h1 class="text-2xl font-semibold">Реєстрацію завершено!</h1>
       <p class="mt-2 text-sm text-slate-600">
-        Акаунт <span class="font-semibold text-slate-900">{{ email }}</span> створено успішно.
+        Акаунт <span class="font-semibold text-slate-900">{{ username }}</span> створено успішно.
       </p>
 
       <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-        Збережіть приватний ключ зараз — він більше не буде показаний!
+        Завантажте приватний ключ зараз — він доступний лише один раз!
       </div>
 
-      <div class="mt-4">
-        <label class="mb-1 block text-sm font-medium text-slate-700">Ваш приватний ключ ЕЦП</label>
-        <textarea id="private-key" readonly rows="8"
-          class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 font-mono text-xs text-slate-700">{{ private_key }}</textarea>
+      <div class="mt-6 flex flex-col gap-3">
+        <a href="{{ url('download-private-key') }}"
+          class="inline-flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700">
+          Завантажити приватний ключ (.pem)
+        </a>
+        <a href="{{ url('login') }}"
+          class="inline-flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">
+          Перейти до входу
+        </a>
       </div>
 
-      <div class="mt-3 flex gap-3">
-        <button onclick="copyKey()"
-          class="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50">
-          Скопіювати ключ
-        </button>
-        <button onclick="downloadKey()"
-          class="flex-1 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700">
-          Завантажити .pem файл
-        </button>
-      </div>
-
-      <a href="{{ url('login') }}"
-        class="mt-3 inline-flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">
-        Перейти до входу
-      </a>
+      <p class="mt-4 text-xs text-slate-500 text-center">
+        Збережіть ключ у надійному місці. Без нього вхід через ЕЦП неможливий.
+      </p>
     </section>
   </main>
-
-  <script>
-    const privateKey = document.getElementById('private-key').value;
-
-    function copyKey() {
-      navigator.clipboard.writeText(privateKey).then(function() {
-        alert('Ключ скопійовано!');
-      });
-    }
-
-    function downloadKey() {
-      const blob = new Blob([privateKey], { type: 'application/x-pem-file' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'private_key.pem';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  </script>
-
   {% include 'partials/footer.html' %}
 </body>
 </html>
