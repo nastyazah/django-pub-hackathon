@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Підписати дані ЕЦП</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-900">
+  <main class="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-6">
+    <section class="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+      <div class="mb-6 flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-white text-lg">🔑</div>
+        <div>
+          <h1 class="text-xl font-semibold">Підготовка файлів ЕЦП</h1>
+          <p class="text-xs text-slate-500 mt-0.5">Завантажте ключ та введіть пароль</p>
+        </div>
+      </div>
+
+      <div class="mb-4 rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-700">
+        Завантажте ваш <strong>private_key.pem</strong> та введіть пароль.
+        Система згенерує zip з файлами для входу через ЕЦП.
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="mb-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data" class="space-y-4">
+        {{ csrf_input }}
+        <div>
+          <label class="mb-1 block text-sm font-medium">Логін</label>
+          <input name="username" type="text" required
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-emerald-400 focus:ring">
+        </div>
+        <div>
+          <label class="mb-1 block text-sm font-medium">Пароль від ключа</label>
+          <input name="password" type="password" required
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-emerald-400 focus:ring">
+        </div>
+        <div>
+          <label class="mb-1 block text-sm font-medium">Файл приватного ключа (.pem)</label>
+          <input name="private_key_file" type="file" accept=".pem" required
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+          <p class="mt-1 text-xs text-slate-500">Файл private_key.pem отриманий при реєстрації</p>
+        </div>
+        <button type="submit"
+          class="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700">
+          Згенерувати файли ЕЦП
+        </button>
+      </form>
+
+      <div class="mt-4 text-center text-sm text-slate-500">
+        <a href="{{ url('login') }}" class="text-slate-700 font-medium hover:underline">← Повернутись до входу</a>
+      </div>
+    </section>
+  </main>
+  {% include "partials/footer.html" %}
+</body>
+</html>

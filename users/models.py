@@ -18,6 +18,13 @@ class User(AbstractUser):
         print(user.public_key)
     """
 
+
+    key_salt = models.BinaryField(
+        blank=True,
+        default=b"",
+        verbose_name="PBKDF2 salt",
+        help_text="Salt used for PBKDF2 key derivation.",
+    )
     public_key = models.TextField(
         blank=True,
         default='',

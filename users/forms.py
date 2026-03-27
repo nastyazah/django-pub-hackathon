@@ -35,3 +35,28 @@ class LoginStep1Form(forms.Form):
 
     username = forms.CharField(label="Логін")
     password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
+
+
+class SignForm(forms.Form):
+    """Form for signing ECP challenge with private key.
+
+    Args:
+        username: User login name.
+        password: Password used to decrypt private key.
+        private_key_file: Encrypted PEM private key file.
+
+    Example:
+        form = SignForm(request.POST, request.FILES)
+        if form.is_valid():
+            private_key_file = form.cleaned_data["private_key_file"]
+    """
+
+    username = forms.CharField(label="Логін")
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Пароль від ключа",
+    )
+    private_key_file = forms.FileField(
+        label="Файл приватного ключа (.pem)",
+        help_text="Завантажте private_key.pem отриманий при реєстрації.",
+    )
