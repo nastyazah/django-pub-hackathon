@@ -10,16 +10,30 @@
   <div class="min-h-screen pb-24 md:h-full md:pb-28">
   <main class="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-6 md:h-full md:py-10">
     <section class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl shadow-slate-300/60 sm:p-8">
-      <h1 class="text-xl font-semibold sm:text-2xl">Вхід у систему</h1>
-      <p class="mt-2 text-sm text-slate-600">Використайте логін та пароль для авторизації.</p>
+
+      <div class="mb-6 flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white text-lg font-bold">🔐</div>
+        <div>
+          <h1 class="text-xl font-semibold sm:text-2xl">Вхід у систему</h1>
+          <p class="text-xs text-slate-500 mt-0.5">Крок 1 з 2 — логін та пароль</p>
+        </div>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="mb-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
 
       {% if form and form.errors %}
-        <div class="mt-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <div class="mb-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
           Невірний логін або пароль.
         </div>
       {% endif %}
 
-      <form action="{{ url('login') }}" method="post" class="mt-6 space-y-4">
+      <form action="{{ url('login') }}" method="post" class="space-y-4">
         {% if csrf_input is defined %}
           {{ csrf_input }}
         {% endif %}
@@ -32,7 +46,8 @@
             type="text"
             autocomplete="username"
             required
-            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-emerald-400 transition focus:ring"
+            placeholder="your_username"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none ring-emerald-400 transition placeholder:text-slate-400 focus:ring focus:border-emerald-400"
           >
         </div>
 
@@ -44,21 +59,27 @@
             type="password"
             autocomplete="current-password"
             required
-            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-emerald-400 transition focus:ring"
+            placeholder="••••••••"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none ring-emerald-400 transition placeholder:text-slate-400 focus:ring focus:border-emerald-400"
           >
         </div>
 
         <button
           type="submit"
-          class="inline-flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
+          class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700 active:scale-[.98]"
         >
-          Увійти
+          Далі
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
       </form>
 
+      <div class="mt-5 rounded-lg bg-slate-50 border border-slate-100 px-4 py-3 text-xs text-slate-500">
+        🔒 Після входу ви будете перенаправлені на крок підтвердження через ЕЦП.
+      </div>
+
       <div class="mt-4 text-center text-sm text-slate-600">
         Не маєте акаунту?
-        <a href="{{ url('register') }}" class="font-semibold text-slate-900 hover:text-slate-700 transition">
+        <a href="{{ url('register') }}" class="font-semibold text-slate-900 hover:text-slate-700 transition underline underline-offset-2">
           Зареєструватися
         </a>
       </div>

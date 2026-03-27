@@ -1,4 +1,8 @@
-Django>=4.2
+Django>=6.0.3
 psycopg2-binary
 gunicorn
 Jinja2
+cryptography
+pycryptodome
+asn1crypto
+certvalidator
