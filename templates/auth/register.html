@@ -1,111 +1,38 @@
 <!DOCTYPE html>
-<html lang="uk" class="overflow-x-hidden">
+<html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Реєстрація</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900 antialiased md:h-screen md:overflow-hidden">
-  <div class="min-h-screen pb-24 md:h-full md:pb-28">
-  <main class="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-6 md:h-full md:py-10">
-    <section class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl shadow-slate-300/60 sm:p-8">
-      <h1 class="text-xl font-semibold sm:text-2xl">Реєстрація</h1>
-      <p class="mt-2 text-sm text-slate-600">Створіть новий акаунт для доступу до системи.</p>
-
-      {% if form and form.errors %}
-        <div class="mt-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-          {% set non_field_errors = form.errors.get('__all__', []) %}
-          {% if non_field_errors %}
-            {% for error in non_field_errors %}
-              <div>{{ error }}</div>
-            {% endfor %}
-          {% else %}
-            Будь ласка, виправте помилки у формі.
-          {% endif %}
-        </div>
-      {% endif %}
-
-      <form action="{{ url('register') }}" method="post" class="mt-6 space-y-4">
-        {% if csrf_input is defined %}
-          {{ csrf_input }}
-        {% endif %}
-
+<body class="min-h-screen bg-slate-100 text-slate-900">
+  <main class="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4">
+    <section class="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+      <h1 class="text-2xl font-semibold">Реєстрація</h1>
+      <p class="mt-2 text-sm text-slate-600">Створіть акаунт для входу через ЕЦП.</p>
+      <form method="post" class="mt-6 space-y-4">
+        {{ csrf_input }}
         <div>
-          <label for="username" class="mb-1 block text-sm font-medium text-slate-700">Логін</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            autocomplete="username"
-            required
-            value="{{ form.data.get('username', '') }}"
-            class="w-full rounded-lg border {% if form.username.errors %}border-rose-300{% else %}border-slate-300{% endif %} px-3 py-2 text-sm outline-none ring-emerald-400 transition focus:ring"
-          >
-          {% if form.username.errors %}
-            <div class="mt-1 text-xs text-rose-600">
-              {% for error in form.username.errors %}
-                <div>{{ error }}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
+          <label class="mb-1 block text-sm font-medium">Логін</label>
+          <input name="username" type="text" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
         </div>
-
         <div>
-          <label for="password1" class="mb-1 block text-sm font-medium text-slate-700">Пароль</label>
-          <input
-            id="password1"
-            name="password1"
-            type="password"
-            autocomplete="new-password"
-            required
-            class="w-full rounded-lg border {% if form.password1.errors %}border-rose-300{% else %}border-slate-300{% endif %} px-3 py-2 text-sm outline-none ring-emerald-400 transition focus:ring"
-          >
-          {% if form.password1.errors %}
-            <div class="mt-1 text-xs text-rose-600">
-              {% for error in form.password1.errors %}
-                <div>{{ error }}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
+          <label class="mb-1 block text-sm font-medium">Пароль</label>
+          <input name="password" type="password" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
         </div>
-
         <div>
-          <label for="password2" class="mb-1 block text-sm font-medium text-slate-700">Підтвердження пароля</label>
-          <input
-            id="password2"
-            name="password2"
-            type="password"
-            autocomplete="new-password"
-            required
-            class="w-full rounded-lg border {% if form.password2.errors %}border-rose-300{% else %}border-slate-300{% endif %} px-3 py-2 text-sm outline-none ring-emerald-400 transition focus:ring"
-          >
-          {% if form.password2.errors %}
-            <div class="mt-1 text-xs text-rose-600">
-              {% for error in form.password2.errors %}
-                <div>{{ error }}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
+          <label class="mb-1 block text-sm font-medium">Підтвердіть пароль</label>
+          <input name="password_confirm" type="password" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
         </div>
-
-        <button
-          type="submit"
-          class="inline-flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
-        >
-          Зареєструватися
+        <button type="submit" class="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">
+          Зареєструватись
         </button>
       </form>
-
-      <div class="mt-4 text-center text-sm text-slate-600">
-        Вже маєте акаунт?
-        <a href="{{ url('login') }}" class="font-semibold text-slate-900 hover:text-slate-700 transition">
-          Увійти
-        </a>
-      </div>
+      <p class="mt-4 text-center text-sm text-slate-600">
+        Вже маєте акаунт? <a href="{{ url('login') }}" class="font-semibold">Увійти</a>
+      </p>
     </section>
   </main>
-  </div>
   {% include 'partials/footer.html' %}
 </body>
 </html>
