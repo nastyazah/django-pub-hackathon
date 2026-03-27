@@ -30,7 +30,8 @@ def basic_certificate_checks(cert: x509.Certificate) -> None:
 
 
 def certificate_public_key_pem(cert: x509.Certificate) -> str:
-    return cert.public_key().public_bytes(Encoding.PEM).decode("utf-8")
+    from cryptography.hazmat.primitives.serialization import PublicFormat
+    return cert.public_key().public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo).decode("utf-8")
 
 
 def validate_certificate_chain_if_enabled(*, cert_der_or_pem: bytes, ca_bundle_path: str) -> None:
